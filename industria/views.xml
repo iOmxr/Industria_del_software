@@ -1,0 +1,192 @@
+<odoo>
+  <data>
+    <!-- VISTAS DE LAS TAREAS -->
+
+    <record id="tarea_view_kanban" model="ir.ui.view">   
+    <field name="name">tarea.view.kanban</field>   
+    <field name="model">tareas.tarea</field>   
+    <field name="arch" type="xml">       
+      <kanban>           
+        <field name="id"/>          
+        <field name="tname"/>          
+        <field name="testado"/>                 
+        <field name="timg"/>           
+          <templates>               
+            <t t-name="kanban-box">                   
+              <div t-attf-class="oe_kanban_global_click">                       
+                <div class="o_kanban_image">                           
+                  <img alt="Avatar" t-att-src="kanban_image('tareas.tarea', 'timg', record.id.raw_value)"/>                      
+                </div>                       
+                <div class="oe_kanban_details">                           
+                  <t class="o_kanban_record_title">                               
+                    <strong t-esc="record.tname.value"/>                           
+                  </t>                           
+                  <div t-if="record.testado.value">                               
+                    <t t-esc="record.testado.value"/>                           
+                  </div>                                                 
+                </div>                   
+              </div>               
+            </t>           
+          </templates>       
+      </kanban>   
+    </field>
+    </record>	
+    
+    <record model="ir.ui.view" id="tarea_view_list">
+      <field name="name">tarea.view.list</field>
+      <field name="model">tareas.tarea</field>
+      <field name="arch" type="xml">
+        <tree string="Tareas a programar">
+          <field name="timg" optional="show" widget="image" height="30" width="30"/>
+          <field name="tname"/>
+          <field name="testado"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="tarea_view_calendar">
+      <field name="name">tarea.view.calendar</field>
+      <field name="model">tareas.tarea</field>
+      <field name="arch" type="xml">
+        <calendar string="Calendario de tareas programadas" date_start="tfecha_inicio" date_stop="tfecha_final" event_open_popup = "True" mode= "month" color= "testado">
+          <field name="tname"/>
+          <field name="testado"/>
+        </calendar>
+      </field>
+    </record>    
+
+    <record model="ir.ui.view" id="tarea_view_form">
+      <field name="name">tarea.view.form</field>
+      <field name="model">tareas.tarea</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+           <group colspan="4">
+              <group colspan="2" col="2">
+                  <separator string="Informacion de la tarea" colspan="2"/>
+                  <group>
+                    <field name="tname"/>
+                    <field name="testado"/>
+                    <field name="tfecha_inicio"/>
+                    <field name="tfecha_final"/>
+                  </group>  
+              </group>
+              <group colspan="1" col="1">
+                <group>
+                    <field name="timg" optional="show" widget="image" height="100" width="100"/>
+                </group>
+              </group>
+
+              <notebook colspan="4">
+                  <page string="Participantes">
+                      <field name="persona_ids" nolabel="1"/>
+                  </page>
+                  <page string="Description">
+                      <field name="tdesc" nolabel="1"/>
+                  </page>
+              </notebook>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+  <!-- VISTAS DE LOS PARTICIPANTES -->
+
+    <record id="persona_view_kanban" model="ir.ui.view">   
+      <field name="name">persona.view.kanban</field>   
+      <field name="model">tareas.persona</field>   
+      <field name="arch" type="xml">       
+        <kanban>           
+          <field name="id"/>          
+          <field name="first_name"/>          
+          <field name="last_name"/> 
+          <field name="email"/>                            
+            <templates>               
+              <t t-name="kanban-box">                   
+                <div t-attf-class="oe_kanban_global_click">                       
+                  <div class="o_kanban_image">                           
+                    <img alt="Avatar" t-att-src="kanban_image('tareas.persona', 'img', record.id.raw_value)"/>                      
+                  </div>                       
+                  <div class="oe_kanban_details">                           
+                    <t class="o_kanban_record_title">                               
+                      <strong t-esc="record.first_name.value"/>                           
+                      <strong t-esc="record.last_name.value"/>                           
+                    </t> 
+                    <div t-if="record.email.value">                               
+                      <t t-esc="record.email.value"/>                           
+                    </div>                                                                          
+                  </div>                   
+                </div>               
+              </t>           
+            </templates>       
+        </kanban>   
+      </field>
+    </record>	
+
+    <record model="ir.ui.view" id="persona_view_list">
+      <field name="name">persona.view.list</field>
+      <field name="model">tareas.persona</field>
+      <field name="arch" type="xml">
+        <tree string="Personas">
+          <field name="img" optional="show" widget="image" height="30" width="30"/>
+          <field name="first_name"/>
+          <field name="last_name"/>
+          <field name="email"/>
+          <field name="phone"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="persona_view_form">
+      <field name="name">persona.view.form</field>
+      <field name="model">tareas.persona</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                  <field name="img" optional="show" widget="image" height="100" width="100"/>
+              </group>
+            </group>
+            <group colspan="4">
+                <group col="2">
+                    <separator string="Informacion personal" colspan="4"/>
+                    <field name="first_name"/>
+                    <field name="last_name"/>
+                </group>
+                <group col="2">
+                    <separator colspan="4"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </group>
+                <group colspan="4">
+                    <field name="tarea_ids"/>
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="tarea_action_window">
+      <field name="name">Tareas</field>
+      <field name="res_model">tareas.tarea</field>
+      <field name="view_mode">kanban,tree,form,calendar</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="persona_action_window">
+      <field name="name">Personas</field>
+      <field name="res_model">tareas.persona</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+   
+   <!-- menu -->
+    <menuitem name="Tareas" id="tareas_menu_root"/>
+
+    <menuitem name="Tareas" id="tarea_menu" parent="tareas_menu_root" action="tarea_action_window"/>
+    <menuitem name="Personas" id="persona_menu" parent="tareas_menu_root" action="persona_action_window"/>
+  </data>
+</odoo>

@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_tree_indi" model="ir.ui.view">
+        <field name="name">view.tree.indi</field>
+        <field name="model">is.indi</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_form_indi">
+      <field name="name">view.form.indi</field>
+      <field name="model">is.indi</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group string="Información">
+                <field name="name"/>
+              </group>
+              <group string="Estado">
+                <field name="status"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+       </field> 
+    </record>
+
+    <record id="action_view_indi" model="ir.actions.act_window">
+        <field name="name">lista de Tareas</field>
+        <field name="res_model">is.indi</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_indi" parent="" action="action_view_indi"/>
+
+</odoo>
